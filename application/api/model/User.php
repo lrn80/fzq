@@ -19,28 +19,25 @@ class User extends BaseModel {
     /**
      * 验证用户是否存在，并返回用户信息
      */
-    public function loginCheck($data){
-        $result = $this->whereOr('username', '=', $data['username'])
-            ->whereOr('phone_number', '=', $data['username'])
-            ->where('password', '=', $data['password'])
-            ->find();
-        return $result;
+    public function getUserInfo($data){
+        return $this->where('email', '=', $data['email'])
+                    ->where('password', '=', md5($data['password']))
+                    ->find();
     }
 
     /**
      * 插入新用户
      */
-    public function createNewUser($data){
+    public function saveUser($data){
         try{
-            $result = $this->save([
-                'username' => $data['username'],
+            return $this->save([
+                'email' => $data['email'],
                 'password' => md5($data['password']),
-                'phone_number' => $data['phonenumber']
+                'avatar' => './upload/user/924e655022aee453710743990c24134c.jpg',
             ]);
-            return $result;
         }catch (PDOException $e){
             throw new RegisterException([
-                'msg' => '用户名已存在'
+                'msg' => '用户已存在'
             ]);
         }
 

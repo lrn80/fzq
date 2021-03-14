@@ -11,7 +11,7 @@ namespace app\api\validate;
 
 class LoginCheck extends BaseValidate {
     protected $rule = [
-        'username' => 'require',
+        'email' => 'require|email',
         'password' => 'require|max:12|min:5',
     ];
     protected $message = [

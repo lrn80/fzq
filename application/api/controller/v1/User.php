@@ -8,30 +8,35 @@
 
 namespace app\api\controller\v1;
 
+use app\api\service\TokenUser;
 use app\api\validate\LoginCheck;
-use app\api\model\User as UserModel;
 use app\api\validate\RegisterCheck;
 use app\exception\LoginException;
 use app\exception\RegisterException;
 use app\exception\SucceedMessage;
-use app\api\service\TokenUser;
 use app\exception\UserException;
 use think\Cache;
-use think\Config;
 use think\Exception;
 use think\Request;
-
+use app\api\service\User as UserService;
+use \app\api\service\Email;
 class User {
     protected $user;
 
+    /**
+     * 用户登陆接口
+     * @throws Exception
+     * @throws LoginException
+     * @throws SucceedMessage
+     * @throws \app\exception\ParamException
+     */
     public function login() {
         (new LoginCheck())->goCheck();
-        $model = new UserModel();
-        $user  = $model->loginCheck($_POST);
-        if ($user) {
-            throw new SucceedMessage([
-                'msg' => (new TokenUser($user))->get()
-            ]);
+        $params = request()->param();
+
+        $succ = UserService::find($params);
+        if ($succ) {
+            throw new SucceedMessage();
         } else {
             throw new LoginException();
         }
@@ -47,16 +52,31 @@ class User {
         }
     }
 
+    /**
+     * 用户注册接口
+     * @throws Exception
+     * @throws RegisterException
+     * @throws SucceedMessage
+     * @throws UserException
+     * @throws \app\exception\ParamException
+     */
     public function register() {
         (new RegisterCheck())->goCheck();
-        $model = new UserModel();
         if ($_POST['password'] !== $_POST['re_password']){
             throw new RegisterException([
                 'msg' => '两次密码不一致'
             ]);
         }
-        $result = $model->createNewUser($_POST);
-        if ($result){
+        $params = request()->post();
+        $verify = Email::verifyCode($params);
+        if (!$verify) {
+            throw new RegisterException([
+                'mag' => '验证码错误'
+            ]);
+        }
+
+        $succ = UserService::saveUserInfo($params);
+        if ($succ){
             throw new SucceedMessage();
         }else{
             throw new UserException();

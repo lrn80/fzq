@@ -11,9 +11,6 @@
 use think\Route;
 
 require APP_PATH.'/route/l.php';
-require APP_PATH.'/route/w.php';
-require APP_PATH.'/route/c.php';
-
 
 Route::get("api/:v/index","api/:v.index/index");
 

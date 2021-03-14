@@ -11,8 +11,7 @@ namespace app\api\validate;
 
 class RegisterCheck extends BaseValidate {
     protected $rule = [
-        'username' => 'require|checkStandard',
-        'phonenumber' => 'require|length:11|number',
+        'email' => 'require|email',
         'password' => 'require|max:12|min:5',
         're_password' => 'require|max:12|min:5',
     ];
