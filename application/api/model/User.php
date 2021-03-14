@@ -14,7 +14,7 @@ use think\exception\PDOException;
 
 class User extends BaseModel {
 
-    protected $hidden = ['img_id', 'update_time', 'password'];
+    protected $hidden = ['update_time', 'password'];
 
     /**
      * 验证用户是否存在，并返回用户信息
@@ -41,5 +41,10 @@ class User extends BaseModel {
             ]);
         }
 
+    }
+
+    public function getUserByCondition($condition, $field = [])
+    {
+        return $this->where($condition)->field($field)->find();
     }
 }

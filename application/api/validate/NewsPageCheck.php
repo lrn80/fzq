@@ -4,7 +4,7 @@
 namespace app\api\validate;
 
 
-class ArticlePageCheck extends  BaseValidate
+class NewsPageCheck extends  BaseValidate
 {
     protected $rule = [
 

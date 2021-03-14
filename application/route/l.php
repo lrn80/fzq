@@ -7,9 +7,16 @@
  */
 use think\Route;
 
-/*******************news首页***************************/
 //首页左边内容请求api
 Route::get('api/:version/email/getcode','api/:version.email/getCode');
 Route::post('api/:version/user/register','api/:version.user/register');
 Route::post('api/:version/user/login','api/:version.user/login');
-Route::post('api/:version/user/login','api/:version.user/login');
+
+// 获取分类列表
+Route::get('api/:version/category/getcategorylist','api/:version.category/getCategoryList');
+
+
+Route::get('api/:version/news/getnewslist','api/:version.news/getNewsList');
+Route::get('api/:version/news/getnewsinfo','api/:version.news/getNewsInfo');
+Route::get('api/:version/news/upvote','api/:version.news/upvote');
+Route::get('api/:version/news/delupvote','api/:version.news/delUpvote');
