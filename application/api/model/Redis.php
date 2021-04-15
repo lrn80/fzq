@@ -15,6 +15,7 @@ class Redis
         if(!self::$_instance instanceof \Redis){
             self::$_instance = new \Redis();
             self::$_instance->connect(config("setting.redis_host"),config("setting.redis_port"));
+            self::$_instance->auth(config('setting.redis_password'));
         }
 
         return self::$_instance;

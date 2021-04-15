@@ -14,7 +14,8 @@ return [
     'aphorism_total' => 30,
     'finish_flag' => 'finish',
     "pagesize" => 10,
-    'redis_host' =>'47.113.99.129', //连接redis的主机ip
+    'redis_host' =>'39.102.34.93', //连接redis的主机ip
     'redis_port' =>'6380',            //连接redis的端口号
+    'redis_password' => 'lrn123',
     'redis_login_code_prefix' => 'redis_login_code_'
 ];

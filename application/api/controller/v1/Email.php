@@ -18,6 +18,13 @@ use app\exception\EmailException;
 
 class Email extends BaseController
 {
+    /**
+     * 获取验证码
+     * @return \think\response\Json
+     * @throws EmailException
+     * @throws \app\lib\exception\ParameterException
+     * @throws \think\Exception
+     */
     public function getCode()
     {
         (new EmailCheck())->goCheck();
