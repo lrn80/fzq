@@ -8,26 +8,33 @@
 
 namespace app\api\service;
 
-
-use app\api\model_fo\User as UserModel;
+use app\api\model\Redis;
 use app\exception\TokenException;
+use app\exception\UserNotExtistException;
 use app\exception\WeChatException;
 use think\Exception;
+use app\api\model\User;
 
 class TokenUser extends Token {
     protected $user = [];
 
-    function __construct($user) {
-        $this->user = $user;
+    function __construct() {
     }
 
     /**
      * 获取令牌，并存入缓存
+     * @param $uid
      * @return string
      * @throws Exception
-     * @throws WeChatException
+     * @throws TokenException
+     * @throws UserNotExtistException
      */
-    public function get() {
+    public function get($uid) {
+        $this->user = (new User())->getUserByCondition(['id' => $uid]);
+        if (!$this->user) {
+            throw new UserNotExtistException();
+        }
+
         $cachedValue = $this->prepareCachedValue($this->user);
         //写入缓存,返回令牌
         $token = $this->saveToCache($cachedValue);
@@ -43,10 +50,11 @@ class TokenUser extends Token {
      */
     private function saveToCache($cacheValue) {
         //生成随机写到Token基类中，供其他service类应用
+        $redis = Redis::getRedis();
         $key        = self::generateToken();
         $cacheValue = json_encode($cacheValue);
         $expire_in  = config('secure.token_expire_in');
-        $result     = cache($key, $cacheValue, $expire_in);
+        $result     = $redis->set($key, $cacheValue, $expire_in);
 
         if (!$result) {
             throw new TokenException([
@@ -54,6 +62,7 @@ class TokenUser extends Token {
                 'errorCode' => 10005
             ]);
         }
+
         return $key;
     }
 
@@ -64,7 +73,7 @@ class TokenUser extends Token {
      * @return mixed
      */
     private function prepareCachedValue($user) {
-        $cachedValue          = $user;
+        $cachedValue  = $user;
         $cachedValue['scope'] = 16;
         return $cachedValue;
     }

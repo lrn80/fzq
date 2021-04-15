@@ -34,16 +34,15 @@ class News
         return $news_model->getNewsInfo(['id' => $news_id]);
     }
 
-    public static function upvote($params)
+    public static function upvote($uid)
     {
-        $news_id = $params['news_id'];
         $news_model = new NewsModel();
-        $news_info = $news_model->getNewsInfo(['id' => $news_id]);
+        $news_info = $news_model->getNewsInfo(['id' => $uid]);
         if (empty($news_info)) {
             return [];
         }
 
-        $succ = $news_model->upvote(['id' => $news_id]);
+        $succ = $news_model->upvote(['id' => $uid]);
         if ($succ) {
             return ['upvote' => $news_info['upvote']];
         }
@@ -51,16 +50,15 @@ class News
         return false;
     }
 
-    public static function delUpvote($params)
+    public static function delUpvote($uid)
     {
-        $news_id = $params['news_id'];
         $news_model = new NewsModel();
-        $news_info = $news_model->getNewsInfo(['id' => $news_id]);
+        $news_info = $news_model->getNewsInfo(['id' => $uid]);
         if (empty($news_info)) {
             return [];
         }
 
-        $succ = $news_model->delUpvote(['id' => $news_id]);
+        $succ = $news_model->delUpvote(['id' => $uid]);
         if ($succ) {
             return ['upvote' => $news_info['upvote']];
         }

@@ -9,14 +9,16 @@
 namespace app\api\controller\v1;
 
 
+use app\api\validate\LoginCheck;
 use app\api\validate\TokenGet;
 use app\api\service\TokenUser;
 
 class Token
 {
-    public function getToken($code,$raw_data){
+    public function getToken(){
         (new TokenGet())->goCheck();
-        $token = (new TokenUser($code,$raw_data))->get();
-        return $token;
+        $params = request()->param();
+        $token = (new TokenUser())->get($params['uid']);
+        return json(['token' => $token]);
     }
 }

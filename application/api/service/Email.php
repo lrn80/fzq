@@ -57,6 +57,10 @@ class Email
     public static function verifyCode($params)
     {
         $redis = Redis::getRedis();
+        if (!isset($params['code'])) {
+            return false;
+        }
+
         $code = $params['code'];
         $email = $params['email'];
         if ($code == $redis->get(config('setting.redis_login_code_prefix') . $email)) {

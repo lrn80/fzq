@@ -19,7 +19,7 @@ use think\Cache;
 use think\Exception;
 use think\Request;
 use app\api\service\User as UserService;
-use \app\api\service\Email;
+use app\api\service\Email;
 class User {
     protected $user;
 

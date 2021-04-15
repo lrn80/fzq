@@ -7,12 +7,13 @@
 namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
+use app\api\service\TokenUser;
 use app\api\validate\NewsIdCheck;
 use app\api\validate\NewsPageCheck;
 use app\api\service\News as NewsService;
 use app\exception\NewException;
 use think\Log;
-
+use app\api\service\Token;
 class News extends BaseController
 {
     /**
@@ -66,9 +67,8 @@ class News extends BaseController
      */
     public function upvote()
     {
-        (new NewsIdCheck())->goCheck();
-        $params = request()->param();
-        $res = NewsService::upvote($params);
+        $uid = Token::getCurrentTokenVar('id');
+        $res = NewsService::upvote($uid);
         if (!$res) {
             throw new NewException([
                 'msg' => '文章已删除或者不存在'
@@ -83,9 +83,8 @@ class News extends BaseController
      */
     public function delUpvote()
     {
-        (new NewsIdCheck())->goCheck();
-        $params = request()->param();
-        $res = NewsService::delUpvote($params);
+        $uid = Token::getCurrentTokenVar('id');
+        $res = NewsService::delUpvote($uid);
         if (!$res) {
             throw new NewException([
                 'msg' => '文章已删除或者不存在'

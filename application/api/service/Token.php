@@ -9,6 +9,7 @@
 namespace app\api\service;
 
 
+use app\api\model\Redis;
 use app\exception\TokenException;
 use think\Cache;
 use think\Exception;
@@ -23,9 +24,10 @@ class Token
         $tokenSalt = config('secure.token_salt');
         return md5($randChar.$timestamp.$tokenSalt);
     }
-    protected static function getTokenVarByToken($key = null){
+    public static function getCurrentTokenVar($key = null){
+        $redis = Redis::getRedis();
         $token = Request::instance()->header("token");
-        $value = Cache::get($token);
+        $value = $redis->get($token);
         if(!$value){
             throw new TokenException();
         }else{
@@ -33,6 +35,7 @@ class Token
                 if(!is_array($value)){
                     $value = json_decode($value,true);
                 }
+
                 if(array_key_exists($key,$value)){
                     return $value[$key];
                 }else{
@@ -46,22 +49,27 @@ class Token
             }
         }
     }
+
     public static function getIdByTokenVar(){
         $uid = self::getTokenVarByToken('id');
         return $uid;
     }
+
     public static function getSessionKeyByTokenVar(){
         $uid = self::getTokenVarByToken('session_key');
         return $uid;
     }
-    public static function getNameByTokenVar(){
-        $uid = self::getTokenVarByToken('nickName');
+
+    public static function getUserNameByTokenVar(){
+        $uid = self::getTokenVarByToken('username');
         return $uid;
     }
+
     public static function getImgUrlTokenVar(){
-        $uid = self::getTokenVarByToken('avatarUrl');
+        $uid = self::getTokenVarByToken('avatar');
         return $uid;
     }
+
     public static function checkToken(){
         $token = Request::instance()->header("token");
         $value = Cache::get($token);
@@ -69,6 +77,7 @@ class Token
             throw new TokenException();
         }
     }
+
     public static function getInfoByTokenVar(){
         $info = self::getTokenVarByToken();
         return $info;
