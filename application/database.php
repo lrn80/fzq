@@ -17,11 +17,11 @@ return [
     // 数据库名
     'database'        => 'news',
     // 用户名
-    'username'        => 'lrn',
+    'username'        => 'root',
     // 密码
-    'password'        => 'lrn123',
+    'password'        => '123456',
     // 端口
-    'hostport'        => '3308',
+    'hostport'        => '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
