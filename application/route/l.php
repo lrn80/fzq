@@ -16,7 +16,7 @@ Route::post('api/:version/user/login','api/:version.user/login');
 Route::get('api/:version/category/getcategorylist','api/:version.category/getCategoryList');
 
 
-Route::get('api/:version/news/getnewslist','api/:version.news/getNewsList');
+Route::get('api/:version/news/getnewslist','api/:version.News/getNewsList');
 Route::get('api/:version/news/getnewsinfo','api/:version.news/getNewsInfo');
 Route::get('api/:version/news/upvote','api/:version.news/upvote');
 Route::get('api/:version/news/delupvote','api/:version.news/delUpvote');
