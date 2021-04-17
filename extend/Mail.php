@@ -38,7 +38,7 @@ class Mail
             // 启用TLS加密，`ssl`也被接受
             //$mail->SMTPSecure = 'tls';
             // 连接的TCP端口
-            //$mail->Port = 587;
+            $mail->Port = 587;
             //设置发件人
             $mail->setFrom("3248774731@qq.com", "fzq");
 
@@ -62,7 +62,9 @@ class Mail
             $mail->Subject = $title;
             $mail->Body    = $message;
             //$mail->AltBody = '这是非HTML邮件客户端的纯文本';
-            $mail->send();
+            if ($mail->send()) {
+                throw new \think\Exception();
+            }
             //echo 'Message has been sent';
             //发送邮件过程信息
             $mail->isSMTP();
