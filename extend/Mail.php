@@ -22,7 +22,7 @@ class Mail
         $mail = new PHPMailer();
         try{
             //邮件调试模式
-            $mail->SMTPDebug = 0; // // SMTP调试功能 0=关闭 1 = 错误和消息 2 = 消息
+            $mail->SMTPDebug = 2; // // SMTP调试功能 0=关闭 1 = 错误和消息 2 = 消息
             //设置邮件使用SMTP
             $mail->isSMTP();
             // 设置邮件程序以使用SMTP
@@ -38,7 +38,7 @@ class Mail
             // 启用TLS加密，`ssl`也被接受
             //$mail->SMTPSecure = 'tls';
             // 连接的TCP端口
-            //$mail->Port = 587;
+            $mail->Port = 587;
             //设置发件人
             $mail->setFrom("3248774731@qq.com", "fzq");
 
@@ -51,11 +51,9 @@ class Mail
             //抄送
             //$mail->addCC('cc@example.com');
             //$mail->addBCC('bcc@example.com');
-
             //附件
             //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
             //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
             //Content
             // 将电子邮件格式设置为HTML
             $mail->isHTML(true);
@@ -65,6 +63,7 @@ class Mail
             $mail->send();
             //echo 'Message has been sent';
             //发送邮件过程信息
+        
             $mail->isSMTP();
             \think\Log::info("Send Email code Success email: {$from} name: {$name}");
 

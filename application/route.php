@@ -9,7 +9,6 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\Route;
-
 require APP_PATH.'/route/l.php';
 
 Route::get("api/:v/index","api/:v.index/index");
