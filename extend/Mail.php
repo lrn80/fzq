@@ -60,7 +60,7 @@ class Mail
             $mail->Subject = $title;
             $mail->Body    = $message;
             //$mail->AltBody = '这是非HTML邮件客户端的纯文本';
-            if ($mail->send()) {
+            if (!$mail->send()) {
                 throw new \think\Exception();
             }
             //echo 'Message has been sent';
