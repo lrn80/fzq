@@ -8,7 +8,6 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-
 // [ 应用入口文件 ]
 header("Access-Control-Allow-Origin:*");
 header("Access-Control-Allow-Methods:GET, POST, OPTIONS, DELETE");

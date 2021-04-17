@@ -22,7 +22,7 @@ class Mail
         $mail = new PHPMailer();
         try{
             //邮件调试模式
-            $mail->SMTPDebug = 0; // // SMTP调试功能 0=关闭 1 = 错误和消息 2 = 消息
+            $mail->SMTPDebug = 2; // // SMTP调试功能 0=关闭 1 = 错误和消息 2 = 消息
             //设置邮件使用SMTP
             $mail->isSMTP();
             // 设置邮件程序以使用SMTP
@@ -51,11 +51,9 @@ class Mail
             //抄送
             //$mail->addCC('cc@example.com');
             //$mail->addBCC('bcc@example.com');
-
             //附件
             //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
             //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
             //Content
             // 将电子邮件格式设置为HTML
             $mail->isHTML(true);
@@ -67,6 +65,7 @@ class Mail
             }
             //echo 'Message has been sent';
             //发送邮件过程信息
+        
             $mail->isSMTP();
             \think\Log::info("Send Email code Success email: {$from} name: {$name}");
 
