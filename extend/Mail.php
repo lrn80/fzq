@@ -22,7 +22,7 @@ class Mail
         $mail = new PHPMailer();
         try{
             //邮件调试模式
-            $mail->SMTPDebug = 2; // // SMTP调试功能 0=关闭 1 = 错误和消息 2 = 消息
+            $mail->SMTPDebug = 0; // // SMTP调试功能 0=关闭 1 = 错误和消息 2 = 消息
             //设置邮件使用SMTP
             $mail->isSMTP();
             // 设置邮件程序以使用SMTP
