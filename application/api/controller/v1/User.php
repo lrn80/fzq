@@ -33,13 +33,12 @@ class User {
     public function login() {
         (new LoginCheck())->goCheck();
         $params = request()->param();
-
-        $succ = UserService::find($params);
-        if ($succ) {
-            throw new SucceedMessage();
-        } else {
+        $user_info = UserService::find($params);
+        if (!$user_info) {
             throw new LoginException();
         }
+
+        return json($user_info);
     }
 
     public function logout() {
