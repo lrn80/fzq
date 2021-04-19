@@ -33,7 +33,6 @@ class Email extends BaseController
         if ($this->checkUserExist($params['email'])) {
             throw new UserExtistException();
         }
-
         $code = EmailService::sendCode($params);
         if (!$code) {
             throw new EmailException();
