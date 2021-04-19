@@ -17,7 +17,7 @@ class User extends BaseModel {
     protected $hidden = ['update_time', 'password'];
 
     /**
-     * 验证用户是否存在，并返回用户信息
+     * 检查用户名密码是否正确
      */
     public function getUserInfo($data){
         return $this->where('email', '=', $data['email'])

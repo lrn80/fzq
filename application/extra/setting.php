@@ -14,8 +14,8 @@ return [
     'aphorism_total' => 30,
     'finish_flag' => 'finish',
     "pagesize" => 10,
-    'redis_host' =>'39.102.34.93', //连接redis的主机ip
-    'redis_port' =>'6380',            //连接redis的端口号
-    'redis_password' => 'lrn123',
+    'redis_host' => \think\Env::get('redis.host', '127.0.0.1'), //连接redis的主机ip
+    'redis_port' => \think\Env::get('redis.port', 6379),            //连接redis的端口号
+    'redis_password' => \think\Env::get('redis.password', 123456),
     'redis_login_code_prefix' => 'redis_login_code_'
 ];

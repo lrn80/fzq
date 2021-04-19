@@ -22,4 +22,9 @@ class User
         $user_model = new UserModel();
         return $user_model->saveUser($data);
     }
+
+    public static function getUserInfoByCondition($condition) {
+        $user_model = new UserModel();
+        return $user_model->getUserByCondition($condition);
+    }
 }
