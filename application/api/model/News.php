@@ -38,4 +38,8 @@ class News extends BaseModel
     {
         return $this->where($condition)->setDec('upvote');
     }
+
+    public function getNewsListByCondition($condition) {
+        return $this->where($condition)->select();
+    }
 }

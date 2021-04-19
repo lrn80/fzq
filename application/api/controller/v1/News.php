@@ -8,7 +8,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\service\TokenUser;
-use app\api\validate\NewsIdCheck;
+use app\api\validate\SearchCheck;
 use app\api\validate\NewsPageCheck;
 use app\api\service\News as NewsService;
 use app\exception\NewException;
@@ -46,7 +46,7 @@ class News extends BaseController
      */
     public function getNewsInfo()
     {
-        (new NewsIdCheck())->goCheck();
+        (new SearchCheck())->goCheck();
         $params = request()->param();
         $res = NewsService::getNewsInfo($params);
         if (!$res) {
@@ -92,5 +92,16 @@ class News extends BaseController
         }
 
         return json($res);
+    }
+
+    /**
+     * 文章搜索
+     */
+    public function search() {
+        (new SearchCheck())->goCheck();
+        $params = $this->request->get();
+        $params['uid'] = Token::getCurrentTokenVar('id');
+        $news_list = NewsService::search($params);
+        return json($news_list);
     }
 }

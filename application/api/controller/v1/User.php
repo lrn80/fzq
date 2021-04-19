@@ -34,13 +34,12 @@ class User {
     public function login() {
         (new LoginCheck())->goCheck();
         $params = request()->param();
-
-        $succ = UserService::find($params);
-        if ($succ) {
-            throw new SucceedMessage();
-        } else {
+        $user_info = UserService::find($params);
+        if (!$user_info) {
             throw new LoginException();
         }
+
+        return json($user_info);
     }
 
     public function logout() {
@@ -70,12 +69,11 @@ class User {
         }
         $params = request()->post();
         $verify = Email::verifyCode($params);
-        if (!$verify) {
+       if (!$verify) {
             throw new RegisterException([
                 'msg' => '验证码错误'
             ]);
         }
-
         $succ = UserService::saveUserInfo($params);
         if ($succ){
             throw new SucceedMessage();

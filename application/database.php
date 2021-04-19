@@ -15,13 +15,13 @@ return [
     // 服务器地址
     'hostname'        => \think\Env::get('database.hostname', '127.0.0.1'),
     // 数据库名
-    'database'        => \think\Env::get('databases.database', 'news'),
+    'database'        => \think\Env::get('database.database', 'news'),
     // 用户名
     'username'        => \think\Env::get('database.username', 'root'),
     // 密码
-    'password'        => \think\Env::get('database,password', 123456),
+    'password'        => \think\Env::get('database.password', '123456'),
     // 端口
-    'hostport'        => \think\Env::get('database.hostport','3306' ),
+    'hostport'        => \think\Env::get('database.hostport', 3306),
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数

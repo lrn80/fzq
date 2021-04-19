@@ -8,6 +8,7 @@
 
 namespace app\api\service;
 use app\api\model\User as UserModel;
+use think\Log;
 
 class User
 {
@@ -20,6 +21,17 @@ class User
     public static function saveUserInfo($data)
     {
         $user_model = new UserModel();
-        return $user_model->saveUser($data);
+        $res = $user_model->saveUser($data);
+        if (!$res) {
+            Log::error("User Insert Fail Email:{$data['email']}");
+            return false;
+        }
+
+        return $res;
+    }
+
+    public static function getUserInfoByCondition($condition) {
+        $user_model = new UserModel();
+        return $user_model->getUserByCondition($condition);
     }
 }

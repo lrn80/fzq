@@ -8,7 +8,10 @@
 
 namespace app\api\service;
 use app\api\model\News as NewsModel;
+use app\api\model\SearchHistory;
 use app\api\model\User;
+use think\Log;
+
 class News
 {
     public static function getNewsList($params)
@@ -65,4 +68,26 @@ class News
 
         return false;
     }
+
+    public static function search($params)
+    {
+        $news_model = new NewsModel();
+        $search_history_model = new SearchHistory();
+        $data = [
+            'uid' => $params['uid'],
+            'key' => $params['key'],
+        ];
+        $res = $search_history_model->saveSearchHistory($data);
+        if (!$res) {
+            Log::error(__METHOD__ . "insert search_history fail data:" . json_encode($data));
+        }
+
+        $condition = [
+            'title' => ['like', '%' . $params['key'] . '%'],
+        ];
+
+        return $news_model->getNewsListByCondition($condition);
+    }
+
+
 }

@@ -12,6 +12,6 @@ namespace app\exception;
 class RegisterException extends BaseException
 {
     public $code = "400";
-    public $msg = "用户异常";
+    public $msg = "验证码错误";
     public $errorCode = "10000";
 }

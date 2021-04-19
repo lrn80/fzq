@@ -8,16 +8,13 @@
 
 namespace app\api\service;
 
-
 use app\api\model\Redis;
-use app\api\validate\EmailCheck;
-use app\exception\EmailException;
 use think\Log;
-use think\Request;
+use app\api\model\User as UserModel;
 
 class Email
 {
-    const  REDIS_TIMEOUT = 300;
+    const  REDIS_TIMEOUT = 300; // redis 过期时间300秒
 
     public function __construct()
     {

@@ -17,7 +17,7 @@ class User extends BaseModel {
     protected $hidden = ['update_time', 'password'];
 
     /**
-     * 验证用户是否存在，并返回用户信息
+     * 检查用户名密码是否正确
      */
     public function getUserInfo($data){
         return $this->where('email', '=', $data['email'])
@@ -29,18 +29,12 @@ class User extends BaseModel {
      * 插入新用户
      */
     public function saveUser($data){
-        try{
-            return $this->save([
-                'email' => $data['email'],
-                'password' => md5($data['password']),
-                'avatar' => './upload/user/924e655022aee453710743990c24134c.jpg',
-            ]);
-        }catch (PDOException $e){
-            throw new RegisterException([
-                'msg' => '用户已存在'
-            ]);
-        }
-
+        return $this->save([
+            'username' => $data['email'],
+            'email' => $data['email'],
+            'password' => md5($data['password']),
+            'avatar' => './upload/user/924e655022aee453710743990c24134c.jpg',
+        ]);
     }
 
     public function getUserByCondition($condition, $field = [])
