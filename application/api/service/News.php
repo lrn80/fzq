@@ -83,10 +83,10 @@ class News
         }
 
         $condition = [
-            'key' => ['like', '%' . $params['key'] . '%'],
+            'title' => ['like', '%' . $params['key'] . '%'],
         ];
 
-        return $news_model->getNewsInfo($condition);
+        return $news_model->getNewsListByCondition($condition);
     }
 
 
