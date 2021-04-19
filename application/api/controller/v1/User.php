@@ -69,12 +69,11 @@ class User {
         }
         $params = request()->post();
         $verify = Email::verifyCode($params);
-        if (!$verify) {
+       if (!$verify) {
             throw new RegisterException([
                 'mag' => '验证码错误'
             ]);
         }
-
         $succ = UserService::saveUserInfo($params);
         if ($succ){
             throw new SucceedMessage();

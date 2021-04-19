@@ -29,7 +29,7 @@ class User extends BaseModel {
      * 插入新用户
      */
     public function saveUser($data){
-        try{
+      try{
             return $this->save([
                 'email' => $data['email'],
                 'password' => md5($data['password']),
