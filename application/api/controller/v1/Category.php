@@ -11,6 +11,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\service\Category as CategoryService;
+use think\Env;
 
 class Category extends BaseController
 {
