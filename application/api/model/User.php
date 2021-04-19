@@ -29,7 +29,8 @@ class User extends BaseModel {
      * 插入新用户
      */
     public function saveUser($data){
-        return $this->insert([
+        return $this->save([
+            'username' => $data['email'],
             'email' => $data['email'],
             'password' => md5($data['password']),
             'avatar' => './upload/user/924e655022aee453710743990c24134c.jpg',
