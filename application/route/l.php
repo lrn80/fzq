@@ -20,6 +20,7 @@ Route::get('api/:version/news/getnewslist','api/:version.News/getNewsList');
 Route::get('api/:version/news/getnewsinfo','api/:version.news/getNewsInfo');
 Route::get('api/:version/news/upvote','api/:version.news/upvote');
 Route::get('api/:version/news/delupvote','api/:version.news/delUpvote');
+Route::get('api/:version/news/search','api/:version.news/search'); // 文章搜索
 
 
 Route::get('api/:version/token/gettoken','api/:version.token/gettoken');
