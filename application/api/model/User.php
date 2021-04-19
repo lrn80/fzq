@@ -30,7 +30,7 @@ class User extends BaseModel {
      */
     public function saveUser($data){
         try{
-            return $this->save([
+            return $this->insert([
                 'email' => $data['email'],
                 'password' => md5($data['password']),
                 'avatar' => './upload/user/924e655022aee453710743990c24134c.jpg',
