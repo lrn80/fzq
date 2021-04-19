@@ -16,6 +16,7 @@ use app\exception\RegisterException;
 use app\exception\SucceedMessage;
 use app\exception\UserException;
 use think\Cache;
+use think\Env;
 use think\Exception;
 use think\Request;
 use app\api\service\User as UserService;
@@ -71,7 +72,7 @@ class User {
         $verify = Email::verifyCode($params);
         if (!$verify) {
             throw new RegisterException([
-                'mag' => '验证码错误'
+                'msg' => '验证码错误'
             ]);
         }
 

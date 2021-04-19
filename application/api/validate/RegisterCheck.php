@@ -14,8 +14,9 @@ class RegisterCheck extends BaseValidate {
         'email' => 'require|email',
         'password' => 'require|max:12|min:5',
         're_password' => 'require|max:12|min:5',
+        'code' =>  'require|max:5|min:1',
     ];
     protected $message = [
-        'username.checkStandard' => '命名不规范'
+
     ];
 }
