@@ -24,7 +24,10 @@ class User
         $res = $user_model->saveUser($data);
         if (!$res) {
             Log::error("User Insert Fail Email:{$data['email']}");
+            return false;
         }
+
+        return $res;
     }
 
     public static function getUserInfoByCondition($condition) {
