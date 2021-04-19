@@ -29,18 +29,11 @@ class User extends BaseModel {
      * 插入新用户
      */
     public function saveUser($data){
-        try{
-            return $this->insert([
-                'email' => $data['email'],
-                'password' => md5($data['password']),
-                'avatar' => './upload/user/924e655022aee453710743990c24134c.jpg',
-            ]);
-        }catch (PDOException $e){
-            throw new RegisterException([
-                'msg' => '用户已存在'
-            ]);
-        }
-
+        return $this->insert([
+            'email' => $data['email'],
+            'password' => md5($data['password']),
+            'avatar' => './upload/user/924e655022aee453710743990c24134c.jpg',
+        ]);
     }
 
     public function getUserByCondition($condition, $field = [])
