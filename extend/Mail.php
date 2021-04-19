@@ -15,6 +15,7 @@ class Mail
      * @param $title
      * @param $message
      * @return bool
+     * @throws \app\exception\EmailException
      */
     public static function sendEmail($from, $name, $title, $message)
     {
