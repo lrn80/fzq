@@ -16,7 +16,7 @@ Route::post('api/:version/user/login','api/:version.user/login');
 Route::get('api/:version/category/getcategorylist','api/:version.category/getCategoryList');
 
 
-Route::get('api/:version/news/getnewslist','api/:version.News/getNewsList');
+Route::get('api/:version/news/getnewslist','api/:version.news/getNewsList');
 Route::get('api/:version/news/getnewsinfo','api/:version.news/getNewsInfo');
 Route::get('api/:version/news/upvote','api/:version.news/upvote');
 Route::get('api/:version/news/delupvote','api/:version.news/delUpvote');
@@ -24,3 +24,6 @@ Route::get('api/:version/news/search','api/:version.news/search'); // 文章搜�
 
 
 Route::get('api/:version/token/gettoken','api/:version.token/gettoken');
+
+//搜索历史
+Route::get('api/:version/search_history/get_search_history','api/:version.search_history/getSearchHistory'); // 文章搜索

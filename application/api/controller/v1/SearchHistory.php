@@ -15,9 +15,11 @@ class SearchHistory extends BaseController
      * @throws \app\exception\TokenException
      * @throws \think\Exception
      */
-    public function getSearchHistoryList()
+    public function getSearchHistory()
     {
         $uid = Token::getCurrentTokenVar('id');
         return json(SearchHistoryService::getSearchHistoryList($uid));
     }
+
+
 }
