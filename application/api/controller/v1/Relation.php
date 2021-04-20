@@ -25,7 +25,7 @@ class Relation extends BaseController
     public function follow() {
         (new FollowIdCheck())->goCheck();
         $uid = Token::getCurrentTokenVar('id');
-        $follower_id = $this->request->param(['follow_id']);
+        $follower_id = $this->request->param('follow_id');
         $res = RelationService::follow($uid, $follower_id);
         if ($res) {
             throw new SucceedMessage();
