@@ -33,4 +33,25 @@ class Collect extends BaseController
             throw new UserCollectException();
         }
     }
+
+    /**
+     * 取消收藏
+     * @throws SucceedMessage
+     * @throws UserCollectException
+     * @throws \app\exception\ParamException
+     * @throws \app\exception\TokenException
+     * @throws \think\Exception
+     */
+    public function userCollectDel()
+    {
+        (new NewsIdCheck())->goCheck();
+        $uid = Token::getCurrentTokenVar('id');
+        $params = $this->request->param();
+        $res = CollectService::delCollect($uid, $params['news_id']);
+        if ($res) {
+            throw new SucceedMessage();
+        } else {
+            throw new UserCollectException();
+        }
+    }
 }

@@ -24,7 +24,22 @@ class Collect
 
         $res = (new UserCollectNews())->insert($data);
         if (!$res) {
-            Log::error(__METHOD__ . "user collect news fail uid:{$uid} cid:{$news_id}");
+            Log::error(__METHOD__ . "user collect news fail uid:{$uid} news_id:{$news_id}");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function delCollect($uid, $news_id)
+    {
+        $data = [
+            'uid' => $uid,
+            'news_id' => $news_id
+        ];
+        $res = (new UserCollectNews())->where($data)->delete();
+        if (!$res) {
+            Log::error(__METHOD__ . "del collect news fail uid:{$uid} news_id:{$news_id}");
             return false;
         }
 

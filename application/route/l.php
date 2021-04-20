@@ -34,3 +34,4 @@ Route::delete('api/:version/search/delete','api/:version.search/delHistory'); //
 
 // 用户收藏
 Route::post('api/:version/collect/collect','api/:version.collect/userCollect');
+Route::post('api/:version/collect/del','api/:version.collect/userCollectDel');
