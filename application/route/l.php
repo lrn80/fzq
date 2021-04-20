@@ -42,3 +42,5 @@ Route::post('api/:version/discuss/add','api/:version.discuss/discuss'); //添加
 Route::post('api/:version/discuss/upvote','api/:version.discuss/discussUpvote'); //添加评论
 Route::post('api/:version/discuss/upvotedel','api/:version.discuss/discussUpvoteDel'); //添加评论
 
+// 关注 粉丝
+Route::post('api/:version/relation/follow','api/:version.relation/follow'); //关注
