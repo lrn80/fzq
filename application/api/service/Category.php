@@ -41,4 +41,16 @@ class Category
 
         return true;
     }
+
+    public static function delUserCategory($uid, $cid)
+    {
+        $user_category_model = new UserCategory();
+        $res = $user_category_model->where(['uid' => $uid, 'cid' => $cid])->delete();
+        if (!$res) {
+            Log::info("user category del fail uid:{$uid} cid:{$cid}");
+            return false;
+        }
+
+        return true;
+    }
 }

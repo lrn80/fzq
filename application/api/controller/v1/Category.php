@@ -11,10 +11,13 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\service\Category as CategoryService;
+use app\api\validate\CategoryIdCheck;
 use app\api\validate\UserAddCategoryException;
 use app\api\validate\UserCategoryCheck;
 use app\api\service\Token;
+use app\exception\DeleteUserCategoryException;
 use app\exception\SucceedMessage;
+use think\Log;
 
 class Category extends BaseController
 {
@@ -45,6 +48,18 @@ class Category extends BaseController
             throw new SucceedMessage();
         } else {
             throw new UserAddCategoryException();
+        }
+    }
+
+    public function userCategoryDel() {
+        (new CategoryIdCheck())->goCheck();
+        $uid = Token::getCurrentTokenVar('id');
+        $cid = $this->request->delete();
+        $res = CategoryService::delUserCategory($uid, $cid);
+        if ($res) {
+            throw new SucceedMessage();
+        } else {
+            throw new DeleteUserCategoryException();
         }
     }
 }
