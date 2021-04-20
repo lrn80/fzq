@@ -55,8 +55,15 @@ class Collect extends BaseController
         }
     }
 
+    /**
+     * 收藏列表
+     * @return \think\response\Json
+     * @throws \app\exception\TokenException
+     * @throws \think\Exception
+     */
     public function collectList() {
         $uid = Token::getCurrentTokenVar('id');
-        CollectService::collectList($uid);
+        $list = CollectService::collectList($uid);
+        return json($list);
     }
 }

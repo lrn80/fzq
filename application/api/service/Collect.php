@@ -25,6 +25,7 @@ class Collect
         try {
             $res = (new UserCollectNews())->insert($data);
         } catch (\Exception $e) {
+            Log::error(__METHOD__ . "重复收藏 uid:{$uid} news_id:{$news_id}");
             throw new CollectExtistException();
         }
 
@@ -58,8 +59,14 @@ class Collect
         $collect_list = $collect_model->where(['uid' => $uid])->select()->toArray();
         $news_ids = array_column($collect_list, 'news_id');
         $news_list = $news_model->where('id', 'in', $news_ids)->select();
-        $collect_count_list = $collect_model->where('news_id', 'in', $news_ids)->field('news_id,count(*) as total')->group('news_id')->select()->toArray();
-        var_dump($collect_list_count);
-        exit();
+        $news_list = array_column($news_list, null, 'id');
+        $collect_list_count = $collect_model->where('news_id', 'in', $news_ids)->field('news_id,count(*) as total')->group('news_id')->select()->toArray();
+        $news_ids_count = array_column($collect_list_count, null, 'news_id');
+        foreach ($news_list as &$news_info) {
+            $news_info['collect_sum'] = $news_ids_count[$news_info['id']] ?? 0;
+        }
+
+        unset($news_info);
+        return $news_list;
     }
 }
