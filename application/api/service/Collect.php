@@ -58,7 +58,7 @@ class Collect
         $news_model = new News();
         $collect_list = $collect_model->where(['uid' => $uid])->select()->toArray();
         $news_ids = array_column($collect_list, 'news_id');
-        $news_list = $news_model->where('id', 'in', $news_ids)->select();
+        $news_list = $news_model->where('id', 'in', $news_ids)->select()->toArray();
         $news_list = array_column($news_list, null, 'id');
         $collect_list_count = $collect_model->where('news_id', 'in', $news_ids)->field('news_id,count(*) as total')->group('news_id')->select()->toArray();
         $news_ids_count = array_column($collect_list_count, null, 'news_id');
