@@ -75,6 +75,7 @@ class News
 
     public static function search($params)
     {
+        $page = $params['page'];
         $news_model = new NewsModel();
         $search_history_model = new SearchHistory();
         $data = [
@@ -90,7 +91,7 @@ class News
             'title' => ['like', '%' . $params['key'] . '%'],
         ];
 
-        return $news_model->getNewsListByCondition($condition);
+        return $news_model->getNewsListByCondition($condition, $page);
     }
 
 

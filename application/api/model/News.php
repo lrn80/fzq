@@ -39,7 +39,7 @@ class News extends BaseModel
         return $this->where($condition)->setDec('upvote');
     }
 
-    public function getNewsListByCondition($condition) {
-        return $this->where($condition)->select();
+    public function getNewsListByCondition($condition, $page = 1, $limit = 10) {
+        return $this->where($condition)->page($page)->limit($limit)->select();
     }
 }
