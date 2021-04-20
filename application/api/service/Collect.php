@@ -24,7 +24,7 @@ class Collect
         ];
 
         $info = (new UserCollectNews())->where($data)->find();
-        if (!$info) {
+        if ($info) {
             throw new CollectExtistException();
         }
 
