@@ -8,26 +8,26 @@
 use think\Route;
 
 //首页左边内容请求api
-Route::any('api/:version/email/anycode','api/:version.email/anyCode');
+Route::any('api/:version/email/getcode','api/:version.email/getCode');
 Route::any('api/:version/user/register','api/:version.user/register');
 Route::any('api/:version/user/login','api/:version.user/login');
 Route::any('api/:version/user/upvotesum','api/:version.user/upVoteSum'); //获赞数
 
 // 获取分类列表
-Route::any('api/:version/category/anycategorylist','api/:version.category/anyCategoryList');
+Route::any('api/:version/category/getcategorylist','api/:version.category/getCategoryList');
 Route::any('api/:version/category/delcategory','api/:version.category/userCategoryDel'); //用户频道删除
 Route::any('api/:version/category/addcategory','api/:version.category/UserCategory'); //用户设置频道
 
 
 
-Route::any('api/:version/news/anynewslist','api/:version.news/anyNewsList');
-Route::any('api/:version/news/anynewsinfo','api/:version.news/anyNewsInfo');
+Route::any('api/:version/news/getnewslist','api/:version.news/getNewsList');
+Route::any('api/:version/news/getnewsinfo','api/:version.news/getNewsInfo');
 Route::any('api/:version/news/upvote','api/:version.news/upvote');
 Route::any('api/:version/news/delupvote','api/:version.news/delUpvote');
 Route::any('api/:version/news/search','api/:version.news/search'); // 文章搜索
 
 // 获取token
-Route::any('api/:version/token/anytoken','api/:version.token/anytoken');
+Route::any('api/:version/token/gettoken','api/:version.token/gettoken');
 
 //搜索历史
 Route::any('api/:version/search/history','api/:version.search/searchHistory');
