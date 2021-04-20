@@ -25,9 +25,12 @@ Route::get('api/:version/news/upvote','api/:version.news/upvote');
 Route::get('api/:version/news/delupvote','api/:version.news/delUpvote');
 Route::get('api/:version/news/search','api/:version.news/search'); // 文章搜索
 
-
+// 获取token
 Route::get('api/:version/token/gettoken','api/:version.token/gettoken');
 
 //搜索历史
 Route::get('api/:version/search/history','api/:version.search/searchHistory');
 Route::delete('api/:version/search/delete','api/:version.search/delHistory'); // 文章搜索
+
+// 用户收藏
+Route::post('api/:version/collect/collect','api/:version.collect/userCollect');
