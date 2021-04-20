@@ -15,6 +15,7 @@ use app\exception\LoginException;
 use app\exception\RegisterException;
 use app\exception\SucceedMessage;
 use app\exception\UserException;
+use app\exception\UserExtistException;
 use think\Cache;
 use think\Env;
 use think\Exception;
@@ -67,13 +68,18 @@ class User {
                 'msg' => '两次密码不一致'
             ]);
         }
-        $params = request()->post();
+        $params = request()->param();
         $verify = Email::verifyCode($params);
        if (!$verify) {
             throw new RegisterException([
                 'msg' => '验证码错误'
             ]);
         }
+
+        if ($this->checkUserExist($params['email'])) {
+            throw new UserExtistException();
+        }
+
         $succ = UserService::saveUserInfo($params);
         if ($succ){
             throw new SucceedMessage();
@@ -84,5 +90,14 @@ class User {
 
     public function getUserInfo() {
         return TokenUser::getInfoByTokenVar();
+    }
+
+    protected function checkUserExist($email) {
+        $user_info = UserService::getUserInfoByCondition(['email' => $email]);
+        if ($user_info) {
+            return true;
+        }
+
+        return false;
     }
 }
