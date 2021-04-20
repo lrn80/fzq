@@ -22,13 +22,12 @@ class Collect
             'news_id' => $news_info['id'],
             'title' => $news_info['title']
         ];
-
-        $info = (new UserCollectNews())->where($data)->find();
-        if ($info) {
+        try {
+            $res = (new UserCollectNews())->insert($data);
+        } catch (\Exception $e) {
             throw new CollectExtistException();
         }
 
-        $res = (new UserCollectNews())->insert($data);
         if (!$res) {
             Log::error(__METHOD__ . "user collect news fail uid:{$uid} news_id:{$news_id}");
             return false;
