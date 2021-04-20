@@ -58,7 +58,7 @@ class Collect
         $collect_list = $collect_model->where(['uid' => $uid])->select()->toArray();
         $news_ids = array_column($collect_list, 'news_id');
         $news_list = $news_model->where('id', 'in', $news_ids)->select();
-        $collect_list_count = $collect_model->where('news_id', 'in', $news_ids)->group('news_id')->count();
+        $collect_count_list = $collect_model->where('news_id', 'in', $news_ids)->field('news_id,count(*) as total')->group('news_id')->select()->toArray();
         var_dump($collect_list_count);
         exit();
     }
