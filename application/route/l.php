@@ -14,7 +14,7 @@ Route::post('api/:version/user/login','api/:version.user/login');
 
 // 获取分类列表
 Route::get('api/:version/category/getcategorylist','api/:version.category/getCategoryList');
-Route::delete('api/:version/category/delcategory','api/:version.category/userCategoryDel'); //用户频道删除
+Route::post('api/:version/category/delcategory','api/:version.category/userCategoryDel'); //用户频道删除
 Route::post('api/:version/category/addcategory','api/:version.category/UserCategory'); //用户设置频道
 
 
