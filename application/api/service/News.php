@@ -34,11 +34,11 @@ class News
         $news_id = $params['news_id'];
         $news_model = new NewsModel();
         $collect_num = (new UserCollectNews())->where(['news_id' => $news_id])->count();
-        var_dump($collect_num);
-        exit();
+        $data = $news_model->getNewsInfo(['id' => $news_id]);
+        $data['collect_num'] = $collect_num;
         //$user_model = new User();
         //$user_info = $user_model->getUserByCondition(['uid' => $news_info['uid']], ['name', 'id']);
-        return $news_model->getNewsInfo(['id' => $news_id]);
+        return $data;
     }
 
     public static function upvote($uid)
