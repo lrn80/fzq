@@ -45,3 +45,4 @@ Route::post('api/:version/discuss/upvotedel','api/:version.discuss/discussUpvote
 
 // 关注 粉丝
 Route::post('api/:version/relation/follow','api/:version.relation/follow'); //关注
+Route::get('api/:version/relation/followlist','api/:version.relation/followList'); //关注

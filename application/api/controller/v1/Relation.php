@@ -34,4 +34,9 @@ class Relation extends BaseController
         }
     }
 
+    public function followList() {
+        $uid = Token::getCurrentTokenVar('id');
+        return json(RelationService::getFollowList($uid));
+    }
+
 }

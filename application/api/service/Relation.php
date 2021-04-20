@@ -95,4 +95,17 @@ class Relation
 
         return true;
     }
+
+    public static function getFollowList($uid)
+    {
+        $relation_model = new UserRelation();
+        $user_model = new User();
+        $condition = [
+            'uid' => $uid,
+            'relation_type' => self::FOLLOW,
+        ];
+        $follow_list = $relation_model->where($condition)->select()->toArray();
+        $follower_ids = array_column($follow_list, 'follower_id');
+        return $user_model->where('id', 'in', $follower_ids)->field('id,username,avatar')->select();
+    }
 }
