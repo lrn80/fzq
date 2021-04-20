@@ -26,4 +26,5 @@ Route::get('api/:version/news/search','api/:version.news/search'); // 文章搜�
 Route::get('api/:version/token/gettoken','api/:version.token/gettoken');
 
 //搜索历史
-Route::get('api/:version/search_history/get_search_history','api/:version.search_history/getSearchHistory'); // 文章搜索
+Route::get('api/:version/search/history','api/:version.search/searchHistory');
+Route::delete('api/:version/search/delete','api/:version.search/delHistory'); // 文章搜索

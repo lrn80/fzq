@@ -10,4 +10,5 @@ class SearchHistory extends BaseModel
     {
         return $this->save($data);
     }
+
 }
