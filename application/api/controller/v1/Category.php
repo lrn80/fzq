@@ -62,8 +62,8 @@ class Category extends BaseController
     public function userCategoryDel() {
         (new CategoryIdCheck())->goCheck();
         $uid = Token::getCurrentTokenVar('id');
-        $cid = $this->request->delete();
-        $res = CategoryService::delUserCategory($uid, $cid);
+        $params = $this->request->post();
+        $res = CategoryService::delUserCategory($uid, $params['cid']);
         if ($res) {
             throw new SucceedMessage();
         } else {
