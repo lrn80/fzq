@@ -11,6 +11,7 @@ use think\Route;
 Route::get('api/:version/email/getcode','api/:version.email/getCode');
 Route::post('api/:version/user/register','api/:version.user/register');
 Route::post('api/:version/user/login','api/:version.user/login');
+Route::get('api/:version/user/upvotecount','api/:version.user/upVoteCount'); //获赞数
 
 // 获取分类列表
 Route::get('api/:version/category/getcategorylist','api/:version.category/getCategoryList');

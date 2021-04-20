@@ -9,7 +9,7 @@
 namespace app\api\service;
 use app\api\model\User as UserModel;
 use think\Log;
-
+use app\api\model\News;
 class User
 {
     public static function find($params)
@@ -33,5 +33,12 @@ class User
     public static function getUserInfoByCondition($condition) {
         $user_model = new UserModel();
         return $user_model->getUserByCondition($condition);
+    }
+
+    public static function upVoteCount($uid)
+    {
+        $news_model = new News();
+        $count = $news_model->where(['uid' => $uid])->count();
+        return ['count' => $count];
     }
 }

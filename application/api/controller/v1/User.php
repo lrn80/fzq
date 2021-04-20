@@ -22,6 +22,7 @@ use think\Exception;
 use think\Request;
 use app\api\service\User as UserService;
 use app\api\service\Email;
+use app\api\service\Token;
 class User {
     protected $user;
 
@@ -99,5 +100,12 @@ class User {
         }
 
         return false;
+    }
+
+    public function upVoteCount()
+    {
+        $uid = Token::getCurrentTokenVar('uid');
+        $res = UserService::upVoteCount($uid);
+        return json($res);
     }
 }

@@ -37,7 +37,7 @@ class Relation
         } catch (\Exception $e) {
             Log::error("follow fail ErrorMsg:" . $e->getMessage());
             $relation_model->rollback();
-            throw new \Exception();
+            throw new FollowExtistException();
         }
 
     }
