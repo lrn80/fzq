@@ -5,6 +5,7 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\api\validate\DiscussIdCheck;
 use app\api\validate\NewsIdCheck;
 use app\api\validate\UidNewsIDContentCheck;
 use app\api\service\Token;
@@ -41,7 +42,7 @@ class Discuss extends BaseController
      * @throws \think\Exception
      */
     public function discussUpvote() {
-        (new NewsIdCheck())->goCheck();
+        (new DiscussIdCheck())->goCheck();
         $uid = Token::getCurrentTokenVar('id');
         $params = $this->request->param();
         $news_id = $params['news_id'] ?? '';
@@ -55,7 +56,7 @@ class Discuss extends BaseController
     }
 
     public function discussUpvoteDel() {
-        (new NewsIdCheck())->goCheck();
+        (new DiscussIdCheck())->goCheck();
         $uid = Token::getCurrentTokenVar('id');
         $params = $this->request->param();
         $news_id = $params['news_id'] ?? '';

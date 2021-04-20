@@ -10,16 +10,16 @@ class Collect
 {
     public static function userCollect($uid, $news_id)
     {
-        $category_model = new CategoryModel();
-        $category_info = $category_model->where(['id' => $news_id])->find();
+        $news_model = new News();
+        $news_info = $news_model->where(['id' => $news_id])->find();
         if (empty($category_info)) {
             return false;
         }
 
         $data = [
             'uid' => $uid,
-            'news_id' => $category_info['id'],
-            'title' => $category_info['cname']
+            'news_id' => $news_info['id'],
+            'title' => $news_info['cname']
         ];
 
         $res = (new UserCollectNews())->insert($data);
