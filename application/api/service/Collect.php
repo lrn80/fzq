@@ -50,7 +50,7 @@ class Collect
     {
         $collect_model = new UserCollectNews();
         $news_model = new News();
-        $collect_list = $collect_model->where(['uid' => $uid])->select();
+        $collect_list = $collect_model->where(['uid' => $uid])->select()->toArray();
         $news_ids = array_column($collect_list, 'news_id');
         $news_list = $news_model->where('id', 'in', $news_ids)->select();
         $collect_list_count = $collect_model->where('news_id', 'in', $news_ids)->group('news_id')->count();
