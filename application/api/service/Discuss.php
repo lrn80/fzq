@@ -50,4 +50,21 @@ class Discuss
 
         return true;
     }
+
+    public static function discussUpvoteDel($discuss_id, $news_id)
+    {
+        $discuss_model = new DiscussModel();
+        $info = $discuss_model->where(['id' => $discuss_id, 'news_id' => $news_id])->find();
+        if (!$info) {
+            return false;
+        }
+
+        $res = $discuss_model->where(['id' => $discuss_id, 'news_id' => $news_id])->setDec('upvote');
+        if (!$res) {
+            Log::info(__METHOD__ . "setDec fail discuss_id:{$discuss_id} news_id:{$news_id}");
+            return false;
+        }
+
+        return true;
+    }
 }

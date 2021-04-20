@@ -54,5 +54,17 @@ class Discuss extends BaseController
         }
     }
 
-
+    public function discussUpvoteDel() {
+        (new NewsIdCheck())->goCheck();
+        $uid = Token::getCurrentTokenVar('id');
+        $params = $this->request->param();
+        $news_id = $params['news_id'] ?? '';
+        $discuss_id = $params['discuss_id'] ?? '';
+        $res = DiscussService::discussUpvoteDel($discuss_id, $news_id);
+        if ($res) {
+            throw new SucceedMessage();
+        } else {
+            throw new DiscussException();
+        }
+    }
 }
