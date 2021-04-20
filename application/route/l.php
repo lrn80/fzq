@@ -38,3 +38,4 @@ Route::post('api/:version/collect/del','api/:version.collect/userCollectDel');
 
 // 用户评论
 Route::post('api/:version/discuss/add','api/:version.discuss/discuss'); //添加评论
+Route::post('api/:version/discuss/upvote','api/:version.discuss/discussUpvote'); //添加评论

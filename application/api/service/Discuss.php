@@ -33,4 +33,21 @@ class Discuss
 
         return true;
     }
+
+    public static function discussUpvote($discuss_id, $news_id)
+    {
+        $discuss_model = new DiscussModel();
+        $info = $discuss_model->where(['id' => $discuss_id, 'news_id' => $news_id])->find();
+        if (!$info) {
+            return false;
+        }
+
+        $res = $discuss_model->where(['id' => $discuss_id, 'news_id' => $news_id])->setInc('upvote');
+        if (!$res) {
+            Log::info(__METHOD__ . "setInc fail discuss_id:{$discuss_id} news_id:{$news_id}");
+            return false;
+        }
+
+        return true;
+    }
 }
