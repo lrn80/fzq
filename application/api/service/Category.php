@@ -8,6 +8,8 @@
 
 namespace app\api\service;
 use app\api\model\Category as CategoryModel;
+use app\api\model\UserCategory;
+use think\Log;
 
 class Category
 {
@@ -15,5 +17,28 @@ class Category
     {
         $category_model = new CategoryModel();
         return $category_model->getCategoryList([], ['id', 'cname']);
+    }
+
+    public static function setUserCategory($uid, array $cids)
+    {
+        $category_model = new CategoryModel();
+        $category_list = $category_model->getCategoryListByCids($cids, ['id', 'cname']);
+        $data = [];
+        foreach ($category_list as $item) {
+            $data[] = [
+                'uid' => $uid,
+                'cid' => $item['id'],
+                'cname' => $item['cname'],
+            ];
+        }
+
+        $user_category_model = new UserCategory();
+        $res = $user_category_model->insertAll($data);
+        if (!$res) {
+            Log::error("user category add fail uid:{$uid} cids:" . json($cids));
+            return false;
+        }
+
+        return true;
     }
 }
