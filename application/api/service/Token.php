@@ -24,6 +24,7 @@ class Token
         $tokenSalt = config('secure.token_salt');
         return md5($randChar.$timestamp.$tokenSalt);
     }
+
     public static function getCurrentTokenVar($key = null){
         $redis = Redis::getRedis();
         $token = Request::instance()->header("token");

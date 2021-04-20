@@ -42,7 +42,7 @@ class Discuss extends BaseController
      */
     public function discussUpvote() {
         (new NewsIdCheck())->goCheck();
-        $uid = Token::getCurrentTokenVar('uid');
+        $uid = Token::getCurrentTokenVar('id');
         $params = $this->request->param();
         $news_id = $params['news_id'] ?? '';
         $discuss_id = $params['discuss_id'] ?? '';
