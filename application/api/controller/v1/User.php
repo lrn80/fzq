@@ -102,9 +102,15 @@ class User {
         return false;
     }
 
+    /**
+     * 点赞总数
+     * @return \think\response\Json
+     * @throws Exception
+     * @throws \app\exception\TokenException
+     */
     public function upVoteCount()
     {
-        $uid = Token::getCurrentTokenVar('uid');
+        $uid = Token::getCurrentTokenVar('id');
         $res = UserService::upVoteCount($uid);
         return json($res);
     }
