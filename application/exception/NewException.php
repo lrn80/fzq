@@ -12,6 +12,6 @@ namespace app\exception;
 class NewException extends BaseException
 {
     public $code = "400";
-    public $msg = "文章异常";
+    public $msg = "文章不存在或已删除";
     public $errorCode = "10000";
 }
