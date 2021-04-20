@@ -7,6 +7,7 @@ namespace app\api\service;
 use app\api\model\UserRelation;
 use app\exception\FollowExtistException;
 use app\exception\UserNotExtistException;
+use think\Exception;
 use think\Log;
 use app\api\model\User;
 class Relation
@@ -36,7 +37,7 @@ class Relation
         } catch (\Exception $e) {
             Log::error("follow fail ErrorMsg:" . $e->getMessage());
             $relation_model->rollback();
-            return false;
+            throw new \Exception();
         }
 
     }
