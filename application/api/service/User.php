@@ -35,10 +35,10 @@ class User
         return $user_model->getUserByCondition($condition);
     }
 
-    public static function upVoteCount($uid)
+    public static function upVoteSum($uid)
     {
         $news_model = new News();
         $count = $news_model->where(['uid' => $uid])->sum('upvote');
-        return ['count' => $count];
+        return ['sum' => $count];
     }
 }

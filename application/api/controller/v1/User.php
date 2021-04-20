@@ -108,10 +108,10 @@ class User {
      * @throws Exception
      * @throws \app\exception\TokenException
      */
-    public function upVoteCount()
+    public function upVoteSum()
     {
         $uid = Token::getCurrentTokenVar('id');
-        $res = UserService::upVoteCount($uid);
+        $res = UserService::upVoteSum($uid);
         return json($res);
     }
 }
