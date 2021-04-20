@@ -38,7 +38,7 @@ class User
     public static function upVoteCount($uid)
     {
         $news_model = new News();
-        $count = $news_model->where(['uid' => $uid])->count();
+        $count = $news_model->where(['uid' => $uid])->sum('upvote');
         return ['count' => $count];
     }
 }
