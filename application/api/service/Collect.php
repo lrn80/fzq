@@ -4,6 +4,7 @@
 namespace app\api\service;
 use app\api\model\Category as CategoryModel;
 use app\api\model\UserCollectNews;
+use app\exception\CollectExtistException;
 use think\Log;
 use app\api\model\News;
 class Collect
@@ -21,6 +22,11 @@ class Collect
             'news_id' => $news_info['id'],
             'title' => $news_info['title']
         ];
+
+        $info = (new UserCollectNews())->where($data)->find();
+        if ($info) {
+            throw new CollectExtistException();
+        }
 
         $res = (new UserCollectNews())->insert($data);
         if (!$res) {
