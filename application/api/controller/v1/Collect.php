@@ -26,7 +26,7 @@ class Collect extends BaseController
         (new NewsIdCheck())->goCheck();
         $uid = Token::getCurrentTokenVar('id');
         $params = $this->request->param();
-        $res = CollectService::userCollect($uid, $params['cid']);
+        $res = CollectService::userCollect($uid, $params['news_id']);
         if ($res) {
             throw new SucceedMessage();
         } else {

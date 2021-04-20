@@ -8,17 +8,17 @@ use think\Log;
 
 class Collect
 {
-    public static function userCollect($uid, $cid)
+    public static function userCollect($uid, $news_id)
     {
         $category_model = new CategoryModel();
-        $category_info = $category_model->where(['uid' => $uid, 'id' => $cid])->find();
+        $category_info = $category_model->where(['uid' => $uid, 'id' => $news_id])->find();
         if (empty($category_info)) {
             return false;
         }
 
         $data = [
             'uid' => $uid,
-            'cid' => $category_info['id'],
+            'news_id' => $category_info['id'],
             'title' => $category_info['title']
         ];
 
