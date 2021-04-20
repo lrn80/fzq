@@ -19,7 +19,7 @@ class Collect
         $data = [
             'uid' => $uid,
             'news_id' => $category_info['id'],
-            'title' => $category_info['title']
+            'title' => $category_info['cname']
         ];
 
         $res = (new UserCollectNews())->insert($data);
