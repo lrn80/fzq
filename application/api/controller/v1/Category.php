@@ -51,6 +51,14 @@ class Category extends BaseController
         }
     }
 
+    /**
+     * 用户频道删除
+     * @throws DeleteUserCategoryException
+     * @throws SucceedMessage
+     * @throws \app\exception\ParamException
+     * @throws \app\exception\TokenException
+     * @throws \think\Exception
+     */
     public function userCategoryDel() {
         (new CategoryIdCheck())->goCheck();
         $uid = Token::getCurrentTokenVar('id');
@@ -62,4 +70,6 @@ class Category extends BaseController
             throw new DeleteUserCategoryException();
         }
     }
+
 }
+
