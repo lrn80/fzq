@@ -7,7 +7,7 @@
  */
 
 return [
-    'img_prefix' => 'http://47.102.205.111:9035',
+    'img_prefix' => 'http://xy.liruoning.cn:8010',
     'url_prefix' => 'http://47.102.205.111:9035',
     'background_total' => 7,
     'background_suffix' => '.jpg',

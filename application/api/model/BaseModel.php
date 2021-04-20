@@ -17,11 +17,10 @@ class BaseModel extends Model
     protected function  prefixImgUrl($value){
         $finalUrl = $value;
         $fromcome = substr($value,0,4);
-        if ($fromcome!='http') {
+        if ($fromcome != 'http') {
             $finalUrl = config('setting.img_prefix') . $value;
         }
         return $finalUrl;
-
     }
 
 }

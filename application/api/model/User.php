@@ -16,11 +16,14 @@ class User extends BaseModel {
 
     protected $hidden = ['update_time', 'password'];
 
+    public function getAvatarAttr($value) {
+        return $this->prefixImgUrl($value);
+    }
     /**
      * 检查用户名密码是否正确
      */
     public function getUserInfo($data){
-        return $this->where('email', '=', $data['email'])
+        return self::where('email', '=', $data['email'])
                     ->where('password', '=', md5($data['password']))
                     ->find();
     }
@@ -29,16 +32,16 @@ class User extends BaseModel {
      * 插入新用户
      */
     public function saveUser($data){
-        return $this->save([
+        return self::save([
             'username' => $data['email'],
             'email' => $data['email'],
             'password' => md5($data['password']),
-            'avatar' => './upload/user/924e655022aee453710743990c24134c.jpg',
+            'avatar' => '/upload/user/924e655022aee453710743990c24134c.jpg',
         ]);
     }
 
     public function getUserByCondition($condition, $field = [])
     {
-        return $this->where($condition)->field($field)->find();
+        return self::where($condition)->field($field)->find();
     }
 }

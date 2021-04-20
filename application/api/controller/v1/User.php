@@ -37,6 +37,7 @@ class User {
         (new LoginCheck())->goCheck();
         $params = request()->param();
         $user_info = UserService::find($params);
+       //$user_info->getAttr('avatar');
         if (!$user_info) {
             throw new LoginException();
         }
@@ -114,4 +115,6 @@ class User {
         $res = UserService::upVoteSum($uid);
         return json($res);
     }
+
+
 }
