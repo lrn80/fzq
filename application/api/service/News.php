@@ -10,6 +10,7 @@ namespace app\api\service;
 use app\api\model\News as NewsModel;
 use app\api\model\SearchHistory;
 use app\api\model\User;
+use app\api\model\UserCollectNews;
 use think\Log;
 
 class News
@@ -32,6 +33,9 @@ class News
     {
         $news_id = $params['news_id'];
         $news_model = new NewsModel();
+        $collect_num = (new UserCollectNews())->where(['news_id' => $news_id])->count();
+        var_dump($collect_num);
+        exit();
         //$user_model = new User();
         //$user_info = $user_model->getUserByCondition(['uid' => $news_info['uid']], ['name', 'id']);
         return $news_model->getNewsInfo(['id' => $news_id]);

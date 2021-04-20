@@ -8,6 +8,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\service\TokenUser;
+use app\api\validate\NewsIdCheck;
 use app\api\validate\SearchCheck;
 use app\api\validate\NewsPageCheck;
 use app\api\service\News as NewsService;
@@ -46,7 +47,7 @@ class News extends BaseController
      */
     public function getNewsInfo()
     {
-        (new SearchCheck())->goCheck();
+        (new NewsIdCheck())->goCheck();
         $params = request()->param();
         $res = NewsService::getNewsInfo($params);
         if (!$res) {
