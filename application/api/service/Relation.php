@@ -53,8 +53,7 @@ class Relation
         if ($relation_info) {
             throw new FollowExtistException();
         }
-
-        $res = $relation_model->where($data_follow)->insert();
+        $res = $relation_model->insert($data_follow);
         if (!$res) {
             Log::error("user relation follow fail uid:{$uid} follower_id:{$follower_id}");
             return false;
@@ -76,7 +75,7 @@ class Relation
             throw new FollowExtistException();
         }
 
-        $res = $relation_model->where($data_fans)->insert();
+        $res = $relation_model->insert($data_fans);
         if (!$res) {
             Log::error("user relation fans fail uid:{$uid} follower_id:{$follower_id}");
             return false;
