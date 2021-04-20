@@ -5,7 +5,7 @@ namespace app\api\service;
 use app\api\model\Category as CategoryModel;
 use app\api\model\UserCollectNews;
 use think\Log;
-
+use app\api\model\News;
 class Collect
 {
     public static function userCollect($uid, $news_id)
@@ -44,5 +44,17 @@ class Collect
         }
 
         return true;
+    }
+
+    public static function collectList($uid)
+    {
+        $collect_model = new UserCollectNews();
+        $news_model = new News();
+        $collect_list = $collect_model->where(['uid' => $uid])->select();
+        $news_ids = array_column($collect_list, 'news_id');
+        $news_list = $news_model->where('id', 'in', $news_ids)->select();
+        $collect_list_count = $collect_model->where('news_id', 'in', $news_ids)->group('news_id')->count();
+        var_dump($collect_list_count);
+        exit();
     }
 }

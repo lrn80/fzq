@@ -54,4 +54,9 @@ class Collect extends BaseController
             throw new UserCollectException();
         }
     }
+
+    public function collectList() {
+        $uid = Token::getCurrentTokenVar('id');
+        CollectService::collectList($uid);
+    }
 }
