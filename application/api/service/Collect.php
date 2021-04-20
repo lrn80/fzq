@@ -12,7 +12,7 @@ class Collect
     {
         $news_model = new News();
         $news_info = $news_model->where(['id' => $news_id])->find();
-        if (empty($category_info)) {
+        if (empty($news_info)) {
             return false;
         }
 
