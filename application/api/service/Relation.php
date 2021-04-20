@@ -108,4 +108,17 @@ class Relation
         $follower_ids = array_column($follow_list, 'follower_id');
         return $user_model->where('id', 'in', $follower_ids)->field('id,username,avatar')->select();
     }
+
+    public static function getFansList($uid)
+    {
+        $relation_model = new UserRelation();
+        $user_model = new User();
+        $condition = [
+            'uid' => $uid,
+            'relation_type' => self::FANS,
+        ];
+        $fans_list = $relation_model->where($condition)->select()->toArray();
+        $fans_ids = array_column($fans_list, 'follower_id');
+        return $user_model->where('id', 'in', $fans_ids)->field('id,username,avatar')->select();
+    }
 }

@@ -34,9 +34,20 @@ class Relation extends BaseController
         }
     }
 
+    /**
+     * 获取关注列表
+     * @return \think\response\Json
+     * @throws \app\exception\TokenException
+     * @throws \think\Exception
+     */
     public function followList() {
         $uid = Token::getCurrentTokenVar('id');
         return json(RelationService::getFollowList($uid));
+    }
+
+    public function fansList() {
+        $uid = Token::getCurrentTokenVar('id');
+        return json(RelationService::getFansList($uid));
     }
 
 }
