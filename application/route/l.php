@@ -42,6 +42,7 @@ Route::any('api/:version/collect/collectlist','api/:version.collect/collectList'
 Route::any('api/:version/discuss/add','api/:version.discuss/discuss'); //添加评论
 Route::any('api/:version/discuss/upvote','api/:version.discuss/discussUpvote'); //添加评论
 Route::any('api/:version/discuss/upvotedel','api/:version.discuss/discussUpvoteDel'); //添加评论
+Route::any('api/:version/discuss/list','api/:version.discuss/discussList'); //获取评论列表
 
 // 关注 粉丝
 Route::any('api/:version/relation/follow','api/:version.relation/follow'); //关注

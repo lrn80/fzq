@@ -68,4 +68,16 @@ class Discuss extends BaseController
             throw new DiscussException();
         }
     }
+
+    /**
+     * 获取评论列表
+     * @return \think\response\Json
+     * @throws \app\exception\ParamException
+     */
+    public function discussList() {
+        (new NewsIdCheck())->goCheck();
+        $news_id = $this->request->param();
+        $list = DiscussService::getDiscussList($news_id);
+        return json($list);
+    }
 }

@@ -67,4 +67,22 @@ class Discuss
 
         return true;
     }
+
+    public static function getDiscussList($news_id)
+    {
+        $disscuss_model = new DiscussModel();
+        $user_model = new UserModel();
+        $list = $disscuss_model->where(['news_id' => $news_id])->select()->toArray();
+        $uids = array_column($list, 'uid');
+        $user_list = $user_model->where('id', 'in', $uids)->select()->toArray();
+        $user_list = array_column($user_list, null, 'id');
+        foreach ($list as &$item) {
+            if (isset($user_list[$item['uid']])) {
+                $item['user_info'] = $user_list[$item['uid']];
+            }
+        }
+
+        unset($item);
+        return $list;
+    }
 }
