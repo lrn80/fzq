@@ -15,9 +15,18 @@ use think\exception\PDOException;
 class User extends BaseModel {
 
     protected $hidden = ['update_time', 'password'];
-
+    const SEX_MAN = 1;
+    const SEX_WOMAN = 2;
     public function getAvatarAttr($value) {
         return $this->prefixImgUrl($value);
+    }
+
+    public function getSexAttr($value) {
+        if ($value == self::SEX_MAN) {
+            return "男";
+        } else {
+            return "女";
+        }
     }
     /**
      * 检查用户名密码是否正确
