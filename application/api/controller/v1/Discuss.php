@@ -76,7 +76,7 @@ class Discuss extends BaseController
      */
     public function discussList() {
         (new NewsIdCheck())->goCheck();
-        $news_id = $this->request->param();
+        $news_id = $this->request->param('news_id');
         $list = DiscussService::getDiscussList($news_id);
         return json($list);
     }
