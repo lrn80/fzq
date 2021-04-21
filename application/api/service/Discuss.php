@@ -80,6 +80,7 @@ class Discuss
             if (isset($user_list[$item['uid']])) {
                 $item['user_info'] = $user_list[$item['uid']];
             }
+            unset($item['uid'], $item['user_info']['id']);
         }
 
         unset($item);
