@@ -116,5 +116,10 @@ class User {
         return json($res);
     }
 
-
+    public function userInfo() {
+        $user_model = new \app\api\model\User();
+        $list = $user_model->where(['id' => 1])->select();
+        var_dump($list);
+        exit();
+    }
 }

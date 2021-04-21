@@ -12,6 +12,7 @@ Route::any('api/:version/email/getcode','api/:version.email/getCode');
 Route::any('api/:version/user/register','api/:version.user/register');
 Route::any('api/:version/user/login','api/:version.user/login');
 Route::any('api/:version/user/upvotesum','api/:version.user/upVoteSum'); //获赞数
+Route::any('api/:version/user/user','api/:version.user/userInfo'); //获赞数
 
 // 获取分类列表
 Route::any('api/:version/category/getcategorylist','api/:version.category/getCategoryList');
