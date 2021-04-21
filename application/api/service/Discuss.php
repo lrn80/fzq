@@ -72,7 +72,7 @@ class Discuss
     {
         $disscuss_model = new DiscussModel();
         $user_model = new UserModel();
-        $list = $disscuss_model->where(['news_id' => $news_id])->select()->toArray();
+        $list = $disscuss_model->where(['news_id' => $news_id])->order('id','desc')->select()->toArray();
         $uids = array_column($list, 'uid');
         $user_list = $user_model->where('id', 'in', $uids)->select()->toArray();
         $user_list = array_column($user_list, null, 'id');
