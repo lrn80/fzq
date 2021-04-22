@@ -93,7 +93,9 @@ class User {
     }
 
     public function getUserInfo() {
-        return TokenUser::getInfoByTokenVar();
+        $uid = Token::getCurrentTokenVar('id');
+        $info = UserService::getUserInfoByCondition(['id' => $uid]);
+        return json($info);
     }
 
     protected function checkUserExist($email) {
@@ -120,8 +122,7 @@ class User {
 
     public function edit() {
         (new UserCheck())->goCheck();
-        //$uid = Token::getCurrentTokenVar('id');
-        $uid = 1;
+        $uid = Token::getCurrentTokenVar('id');
         $params = request()->param();
         $save_name = Upload::uploadImg(config('setting.img_url'), 'image');
         if ($save_name != '') {

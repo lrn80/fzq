@@ -15,6 +15,8 @@ Route::any('api/:version/user/upvotesum','api/:version.user/upVoteSum'); //获�
 Route::any('api/:version/user/user','api/:version.user/userInfo'); //获赞数
 Route::post('api/:version/user/edit','api/:version.user/edit'); //获赞数
 
+Route::any('api/:version/user/info','api/:version.user/getUserInfo');
+
 // 获取分类列表
 Route::any('api/:version/category/getcategorylist','api/:version.category/getCategoryList');
 Route::any('api/:version/category/delcategory','api/:version.category/userCategoryDel'); //用户频道删除
