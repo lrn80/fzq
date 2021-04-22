@@ -116,5 +116,9 @@ class User {
         return json($res);
     }
 
+    public function edit() {
+
+    }
+
 
 }
