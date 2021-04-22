@@ -12,9 +12,11 @@ use app\api\service\TokenUser;
 use app\api\service\Upload;
 use app\api\validate\LoginCheck;
 use app\api\validate\RegisterCheck;
+use app\api\validate\UserCheck;
 use app\exception\LoginException;
 use app\exception\RegisterException;
 use app\exception\SucceedMessage;
+use app\exception\UserEditException;
 use app\exception\UserException;
 use app\exception\UserExtistException;
 use think\Cache;
@@ -116,11 +118,21 @@ class User {
         return json($res);
     }
 
-    public function userInfo() {
-        $user_model = new \app\api\model\User();
-        $list = $user_model->where(['id' => 1])->select();
+    public function edit() {
+        (new UserCheck())->goCheck();
+        //$uid = Token::getCurrentTokenVar('id');
+        $uid = 1;
+        $params = request()->param();
         $save_name = Upload::uploadImg(config('setting.img_url'), 'image');
-        var_dump($list);
-        exit();
+        if ($save_name != '') {
+            $params['avatar'] = '/upload/user/' . $save_name;
+        }
+
+        $res = UserService::edit($params, $uid);
+        if ($res) {
+            throw new SucceedMessage();
+        } else {
+            throw new UserEditException();
+        }
     }
 }

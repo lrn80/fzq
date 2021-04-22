@@ -15,7 +15,7 @@ class Upload
 
         // 移动到框架应用根目录/public/uploads/ 目录下
         if($file){
-            $info = $file->move($imgUrl);
+            $info = $file->rule('uniqid')->move($imgUrl);
             if($info){
 //                // 成功上传后 获取上传信息
 //                // 输出 jpg
@@ -32,5 +32,7 @@ class Upload
                 return false;
             }
         }
+
+        return '';
     }
 }

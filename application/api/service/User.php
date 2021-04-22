@@ -41,4 +41,31 @@ class User
         $count = $news_model->where(['uid' => $uid])->sum('upvote');
         return ['sum' => $count];
     }
+
+    public static function edit($params, $uid)
+    {
+        $update_data = [];
+        if (empty($params)) {
+            return true;
+        }
+
+        if (isset($params['username'])) {
+            $update_data['username'] = $params['username'];
+        }
+
+        if (isset($params['sex'])) {
+            $update_data['sex'] = $params['sex'];
+        }
+
+        if (isset($params['birth'])) {
+            $update_data['birth'] = $params['birth'];
+        }
+
+        if (isset($params['avatar'])) {
+            $update_data['avatar'] = $params['avatar'];
+        }
+
+        $update_data['id'] = $uid;
+        return UserModel::update($update_data);
+    }
 }
