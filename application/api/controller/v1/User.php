@@ -9,6 +9,7 @@
 namespace app\api\controller\v1;
 
 use app\api\service\TokenUser;
+use app\api\service\Upload;
 use app\api\validate\LoginCheck;
 use app\api\validate\RegisterCheck;
 use app\exception\LoginException;
@@ -17,7 +18,6 @@ use app\exception\SucceedMessage;
 use app\exception\UserException;
 use app\exception\UserExtistException;
 use think\Cache;
-use think\Env;
 use think\Exception;
 use think\Request;
 use app\api\service\User as UserService;
@@ -119,6 +119,7 @@ class User {
     public function userInfo() {
         $user_model = new \app\api\model\User();
         $list = $user_model->where(['id' => 1])->select();
+        $save_name = Upload::uploadImg(config('setting.img_url'), 'image');
         var_dump($list);
         exit();
     }
