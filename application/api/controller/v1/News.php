@@ -49,7 +49,8 @@ class News extends BaseController
     {
         (new NewsIdCheck())->goCheck();
         $params = request()->param();
-        $res = NewsService::getNewsInfo($params);
+        $uid = Token::getCurrentTokenVar('id');
+        $res = NewsService::getNewsInfo($params, $uid);
         if (!$res) {
             throw new NewException([
                 'msg' => '你查询的文章不存在或者已删除'

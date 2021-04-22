@@ -56,12 +56,12 @@ class Collect
     {
         $collect_model = new UserCollectNews();
         $news_model = new News();
-        $collect_list = $collect_model->where(['uid' => $uid])->select()->toArray();
-        $news_ids = array_column($collect_list, 'news_id');
-        $news_list = $news_model->where('id', 'in', $news_ids)->select()->toArray();
-        $news_list = array_column($news_list, null, 'id');
-        $collect_list_count = $collect_model->where('news_id', 'in', $news_ids)->field('news_id,count(*) as total')->group('news_id')->select()->toArray();
-        $news_ids_count = array_column($collect_list_count, 'total', 'news_id');
+        $collect_list = $collect_model->where(['uid' => $uid])->select();
+        $news_ids = array_column($collect_list->toArray(), 'news_id');
+        $news_list = $news_model->where('id', 'in', $news_ids)->select();
+        //$news_list = array_column($news_list->toArray(), null, 'id');
+        $collect_list_count = $collect_model->where('news_id', 'in', $news_ids)->field('news_id,count(*) as total')->group('news_id')->select();
+        $news_ids_count = array_column($collect_list_count->toArray(), 'total', 'news_id');
         foreach ($news_list as &$news_info) {
             $news_info['collect_sum'] = $news_ids_count[$news_info['id']]['total'] ?? 0;
         }

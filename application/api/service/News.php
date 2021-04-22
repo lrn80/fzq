@@ -12,9 +12,12 @@ use app\api\model\News as NewsModel;
 use app\api\model\SearchHistory;
 use app\api\model\User;
 use app\api\model\UserCollectNews;
+use app\api\model\UserRelation;
 use app\api\model\UserUpvoteNews;
+use app\exception\NewsUpvoteExtistException;
+use app\exception\NewsUpvoteNotException;
 use think\Log;
-use app\api\model\Upvote  as UpvoteModel;
+
 class News
 {
     public static function getNewsList($params)
@@ -31,12 +34,38 @@ class News
         return $news_list;
     }
 
-    public static function getNewsInfo($params)
+    public static function getNewsInfo($params, $uid)
     {
         $news_id = $params['news_id'];
         $news_model = new NewsModel();
+        $user_relation_model = new UserRelation();
         $collect_num = (new UserCollectNews())->where(['news_id' => $news_id])->count();
         $data = $news_model->getNewsInfo(['id' => $news_id]);
+        $news_uid = $data['uid'];
+        $relation_data = [
+            'uid' => $uid,
+            'follower_id' => $news_uid,
+            'relation_type' => CommConst::RELATION_FOLLOW
+        ];
+
+        //  是否关注过
+        $relation_info = $user_relation_model->where($relation_data)->find();
+        $data['follow_status'] = empty($relation_info) ? CommConst::FOLLOW_STATUS_NOT : CommConst::FOLLOW_STATUS_ALREADY;
+        // 是否收藏过
+        $collect_info = [
+            'uid' => $uid,
+            'news_id' => $news_id
+        ];
+        $collect_info = (new UserCollectNews())->where($collect_info)->find();
+        $data['collect_status'] = empty($collect_info) ? CommConst::COLLECT_STATUS_NOT : CommConst::COLLECT_STATUS_ALREADY;
+        // 是否点赞过
+        $upvote_data = [
+            'uid' => $uid,
+            'news_id' => $news_id,
+            'type' => CommConst::UPVOTE_NEWS
+        ];
+        $upvote_info = (new UserUpvoteNews())->where($upvote_data)->find();
+        $data['upvote_status'] = empty($upvote_info) ? CommConst::UPVOTE_STATUS_NOT : CommConst::UPVOTE_STATUS_ALREADY;
         $data['collect_num'] = $collect_num;
         //$user_model = new User();
         //$user_info = $user_model->getUserByCondition(['uid' => $news_info['uid']], ['name', 'id']);
@@ -53,28 +82,33 @@ class News
         }
 
         $news_model->startTrans();
-        $upvote_data = [
-            'uid' => $uid,
-            'news_id' => $news_id,
-            'type' => CommConst::UPVOTE_NEWS
-        ];
+        try {
 
-        $res = $upvote_model->insert($upvote_data);
-        if (!$res) {
-            Log::error(__METHOD__ . "insert upvote fail uid{$uid} news_id:{$news_id} type:" . CommConst::UPVOTE_NEWS);
-            $upvote_model->rollback();
-            return false;
+            $upvote_data = [
+                'uid' => $uid,
+                'news_id' => $news_id,
+                'type' => CommConst::UPVOTE_NEWS
+            ];
+
+            $res = $upvote_model->insert($upvote_data);
+            if (!$res) {
+                Log::error(__METHOD__ . "insert upvote fail uid{$uid} news_id:{$news_id} type:" . CommConst::UPVOTE_NEWS);
+                $upvote_model->rollback();
+                return false;
+            }
+
+            $succ = $news_model->upvote(['id' => $news_id]);
+            if (!$succ) {
+                Log::error(__METHOD__ . "insert upvote fail news uid{$uid} news_id:{$news_id}");
+                $upvote_model->rollback();
+                return false;
+            }
+
+            $upvote_model->commit();
+            return ['upvote' => $news_info['upvote']];
+        } catch (\Exception $e) {
+            throw new NewsUpvoteExtistException();
         }
-
-        $succ = $news_model->upvote(['id' => $news_id]);
-        if (!$succ) {
-            Log::error(__METHOD__ . "insert upvote fail news uid{$uid} news_id:{$news_id}");
-            $upvote_model->rollback();
-            return false;
-        }
-
-        $upvote_model->commit();
-        return ['upvote' => $news_info['upvote']];
     }
 
     public static function delUpvote($uid, $news_id)
@@ -88,28 +122,33 @@ class News
         }
 
         $news_model->startTrans();
-        $upvote_data = [
-            'uid' => $uid,
-            'news_id' => $news_id,
-            'type' => CommConst::UPVOTE_NEWS
-        ];
+        try {
 
-        $res = $upvote_model->where($upvote_data)->delete();
-        if (!$res) {
-            Log::error(__METHOD__ . "delete upvote fail uid{$uid} news_id:{$news_id} type:" . CommConst::UPVOTE_NEWS);
-            $upvote_model->rollback();
-            return false;
+            $upvote_data = [
+                'uid' => $uid,
+                'news_id' => $news_id,
+                'type' => CommConst::UPVOTE_NEWS
+            ];
+
+            $res = $upvote_model->where($upvote_data)->delete();
+            if (!$res) {
+                Log::error(__METHOD__ . "delete upvote fail uid{$uid} news_id:{$news_id} type:" . CommConst::UPVOTE_NEWS);
+                $upvote_model->rollback();
+                return false;
+            }
+
+            $succ = $news_model->delUpvote(['id' => $uid]);
+            if (!$succ) {
+                Log::error(__METHOD__ . "delete upvote fail news uid{$uid} news_id:{$news_id}");
+                $upvote_model->rollback();
+                return false;
+            }
+
+            $upvote_model->commit();
+            return ['upvote' => $news_info['upvote']];
+        } catch (\Exception $e) {
+            throw new NewsUpvoteNotException();
         }
-
-        $succ = $news_model->delUpvote(['id' => $uid]);
-        if (!$succ) {
-            Log::error(__METHOD__ . "delete upvote fail news uid{$uid} news_id:{$news_id}");
-            $upvote_model->rollback();
-            return false;
-        }
-
-        $upvote_model->commit();
-        return ['upvote' => $news_info['upvote']];
     }
 
     public static function search($params)
