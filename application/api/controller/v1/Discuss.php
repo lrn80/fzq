@@ -47,7 +47,7 @@ class Discuss extends BaseController
         $params = $this->request->param();
         $news_id = $params['news_id'] ?? '';
         $discuss_id = $params['discuss_id'] ?? '';
-        $res = DiscussService::discussUpvote($discuss_id, $news_id);
+        $res = DiscussService::discussUpvote($discuss_id, $news_id, $uid);
         if ($res) {
             throw new SucceedMessage();
         } else {
@@ -61,7 +61,7 @@ class Discuss extends BaseController
         $params = $this->request->param();
         $news_id = $params['news_id'] ?? '';
         $discuss_id = $params['discuss_id'] ?? '';
-        $res = DiscussService::discussUpvoteDel($discuss_id, $news_id);
+        $res = DiscussService::discussUpvoteDel($discuss_id, $news_id, $uid);
         if ($res) {
             throw new SucceedMessage();
         } else {

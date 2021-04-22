@@ -7,12 +7,14 @@
 
 
 namespace app\api\service;
+use app\api\common\CommConst;
 use app\api\model\News as NewsModel;
 use app\api\model\SearchHistory;
 use app\api\model\User;
 use app\api\model\UserCollectNews;
+use app\api\model\UserUpvoteNews;
 use think\Log;
-
+use app\api\model\Upvote  as UpvoteModel;
 class News
 {
     public static function getNewsList($params)
@@ -41,36 +43,73 @@ class News
         return $data;
     }
 
-    public static function upvote($uid)
+    public static function upvote($uid, $news_id)
     {
         $news_model = new NewsModel();
+        $upvote_model = new UserUpvoteNews();
         $news_info = $news_model->getNewsInfo(['id' => $uid]);
         if (empty($news_info)) {
             return [];
         }
 
-        $succ = $news_model->upvote(['id' => $uid]);
-        if ($succ) {
-            return ['upvote' => $news_info['upvote']];
+        $news_model->startTrans();
+        $upvote_data = [
+            'uid' => $uid,
+            'news_id' => $news_id,
+            'type' => CommConst::UPVOTE_NEWS
+        ];
+
+        $res = $upvote_model->insert($upvote_data);
+        if (!$res) {
+            Log::error(__METHOD__ . "insert upvote fail uid{$uid} news_id:{$news_id} type:" . CommConst::UPVOTE_NEWS);
+            $upvote_model->rollback();
+            return false;
         }
 
-        return false;
+        $succ = $news_model->upvote(['id' => $news_id]);
+        if (!$succ) {
+            Log::error(__METHOD__ . "insert upvote fail news uid{$uid} news_id:{$news_id}");
+            $upvote_model->rollback();
+            return false;
+        }
+
+        $upvote_model->commit();
+        return ['upvote' => $news_info['upvote']];
     }
 
-    public static function delUpvote($uid)
+    public static function delUpvote($uid, $news_id)
     {
         $news_model = new NewsModel();
+        $upvote_model = new UserUpvoteNews();
+
         $news_info = $news_model->getNewsInfo(['id' => $uid]);
         if (empty($news_info)) {
             return [];
+        }
+
+        $news_model->startTrans();
+        $upvote_data = [
+            'uid' => $uid,
+            'news_id' => $news_id,
+            'type' => CommConst::UPVOTE_NEWS
+        ];
+
+        $res = $upvote_model->where($upvote_data)->delete();
+        if (!$res) {
+            Log::error(__METHOD__ . "delete upvote fail uid{$uid} news_id:{$news_id} type:" . CommConst::UPVOTE_NEWS);
+            $upvote_model->rollback();
+            return false;
         }
 
         $succ = $news_model->delUpvote(['id' => $uid]);
-        if ($succ) {
-            return ['upvote' => $news_info['upvote']];
+        if (!$succ) {
+            Log::error(__METHOD__ . "delete upvote fail news uid{$uid} news_id:{$news_id}");
+            $upvote_model->rollback();
+            return false;
         }
 
-        return false;
+        $upvote_model->commit();
+        return ['upvote' => $news_info['upvote']];
     }
 
     public static function search($params)

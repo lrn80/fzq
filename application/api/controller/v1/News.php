@@ -68,8 +68,10 @@ class News extends BaseController
      */
     public function upvote()
     {
+        (new NewsIdCheck())->goCheck();
+        $news_id = $this->request->param('news_id');
         $uid = Token::getCurrentTokenVar('id');
-        $res = NewsService::upvote($uid);
+        $res = NewsService::upvote($uid, $news_id);
         if (!$res) {
             throw new NewException([
                 'msg' => '文章已删除或者不存在'
@@ -84,8 +86,10 @@ class News extends BaseController
      */
     public function delUpvote()
     {
+        (new NewsIdCheck())->goCheck();
+        $news_id = $this->request->param('news_id');
         $uid = Token::getCurrentTokenVar('id');
-        $res = NewsService::delUpvote($uid);
+        $res = NewsService::delUpvote($uid, $news_id);
         if (!$res) {
             throw new NewException([
                 'msg' => '文章已删除或者不存在'
