@@ -15,7 +15,12 @@ class User
     public static function find($params)
     {
         $user_model = new UserModel();
-        return $user_model->getUserInfo($params);
+        $user_info = $user_model->getUserInfo($params);
+        if ($user_info) {
+            $user_info['token'] = (new TokenUser())->get($user_info['id']);
+        }
+
+        return $user_info;
     }
 
     public static function saveUserInfo($data)
