@@ -50,4 +50,18 @@ class Relation extends BaseController
         return json(RelationService::getFansList($uid));
     }
 
+    public function followDel() {
+        (new FollowIdCheck())->goCheck();
+        $uid = Token::getCurrentTokenVar('id');
+        $follower_id = $this->request->param('follow_id');
+        $res = RelationService::followDel($uid, $follower_id);
+        if ($res) {
+            throw new SucceedMessage();
+        } else {
+            throw new FollowException([
+                'msg' => "用户取消关注失败"
+            ]);
+        }
+    }
+
 }
