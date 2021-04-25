@@ -29,7 +29,7 @@ Route::any('api/:version/news/getnewsinfo','api/:version.news/getNewsInfo');
 Route::any('api/:version/news/upvote','api/:version.news/upvote');
 Route::any('api/:version/news/delupvote','api/:version.news/delUpvote');
 Route::any('api/:version/news/search','api/:version.news/search'); // 文章搜索
-
+Route::any('api/:version/news/user_news_list','api/:version.news/getUserNewsList'); // 文章搜索
 // 获取token
 Route::any('api/:version/token/gettoken','api/:version.token/gettoken');
 

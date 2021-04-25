@@ -110,4 +110,17 @@ class News extends BaseController
         $news_list = NewsService::search($params);
         return json($news_list);
     }
+
+    /**
+     * 获取当前用户的文章列表
+     * @throws \app\exception\TokenException
+     * @throws \think\Exception
+     */
+    public function  getUserNewsList() {
+        (new NewsPageCheck())->goCheck();
+        $uid = Token::getCurrentTokenVar('id');
+        $page = $this->request->param('page');
+        $list = NewsService::getUserNewsList($uid, $page);
+        return json($list);
+    }
 }
