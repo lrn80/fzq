@@ -29,7 +29,7 @@ Route::any('api/:version/news/getnewsinfo','api/:version.news/getNewsInfo');
 Route::any('api/:version/news/upvote','api/:version.news/upvote');
 Route::any('api/:version/news/delupvote','api/:version.news/delUpvote');
 Route::any('api/:version/news/search','api/:version.news/search'); // 文章搜索
-
+Route::any('api/:version/news/user_news_list','api/:version.news/getUserNewsList'); // 文章搜索
 // 获取token
 Route::any('api/:version/token/gettoken','api/:version.token/gettoken');
 
@@ -52,3 +52,5 @@ Route::any('api/:version/discuss/list','api/:version.discuss/discussList'); //�
 Route::any('api/:version/relation/follow','api/:version.relation/follow'); //关注
 Route::any('api/:version/relation/followlist','api/:version.relation/followList'); //关注列表
 Route::any('api/:version/relation/fanslist','api/:version.relation/fansList'); //获取粉丝列表
+Route::any('api/:version/relation/del','api/:version.relation/followDel'); //关注
+

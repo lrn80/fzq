@@ -172,5 +172,13 @@ class News
         return $news_model->getNewsListByCondition($condition, $page);
     }
 
-
+    public static function getUserNewsList($uid, $page)
+    {
+        $news_model = new NewsModel();
+        $conditions = [
+            'uid' => $uid,
+        ];
+        $list = $news_model->getNewsList($conditions, $page);
+        return $list;
+    }
 }
