@@ -15,6 +15,10 @@ use think\exception\DbException;
 
 class News extends BaseModel
 {
+    public function getImageUrlAttr($value) {
+        return $this->prefixImgUrl($value);
+    }
+
     public function getNewsList($condition = [], $page = 1, $limit = 10, $field = [])
     {
         try {
